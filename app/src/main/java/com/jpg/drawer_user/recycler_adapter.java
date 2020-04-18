@@ -1,5 +1,6 @@
 package com.jpg.drawer_user;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,34 +10,47 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.zip.Inflater;
 
-public class recycler_adapter extends RecyclerView.Adapter<recycler_adapter.listViewHolder> {
+public class recycler_adapter extends RecyclerView.Adapter<recycler_adapter.ListViewHolder> {
+    ArrayList<item_list> list;
 
-    public static class listViewHolder  extends RecyclerView.ViewHolder{
+    public recycler_adapter(ArrayList<item_list> list){
+        this.list=list;
+    }
 
-        public listViewHolder(@NonNull View itemView) {
+    public static class ListViewHolder  extends RecyclerView.ViewHolder{
+        ImageView image;
+        TextView text_Info;
+        public ListViewHolder(@NonNull View itemView) {
             super(itemView);
-            ImageView image = (ImageView) itemView.findViewById(R.id.img);
-            TextView text_Info = (TextView) itemView.findViewById(R.id.tvInfo);
+            image = (ImageView) itemView.findViewById(R.id.img);
+            text_Info = (TextView) itemView.findViewById(R.id.tvInfo);
         }
 
-        //public listViewHolder(ArrayList<>);
+
     }
 
     @NonNull
     @Override
-    public listViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
+    public ListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list,parent,false);
+        ListViewHolder listViewHolder = new ListViewHolder(v);
+        return listViewHolder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull listViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ListViewHolder holder, int position) {
+        item_list currentItem = list.get(position);
+
+        holder.image.setImageResource(currentItem.getSourceImage());
+        holder.text_Info.setText(currentItem.getText_info());
 
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return list.size();
     }
 
 
